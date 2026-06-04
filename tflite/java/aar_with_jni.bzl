@@ -9,7 +9,8 @@ def aar_with_jni(
         flatten_headers = False,
         strip_headers_prefix = "",
         license_file = "@org_tensorflow//:LICENSE",
-        third_party_notice = None):
+        third_party_notice = None,
+        classes_jar = None):
     """Generates an Android AAR with repo root license given an Android library target.
 
     Args:
@@ -25,6 +26,7 @@ def aar_with_jni(
       license_file: Optional. The main LICENSE file to include in the AAR.
           Defaults to @org_tensorflow//:LICENSE.
       third_party_notice: Optional. The third party dependency licenses as THIRD_PARTY_NOTICE.txt.
+      classes_jar: Optional. A jar file to replace the default classes.jar with.
     """
 
     # Generate dummy AndroidManifest.xml for dummy apk usage
@@ -64,6 +66,8 @@ EOF
         name + "_dummy_app_for_so_unsigned.apk",
         license_file,
     ]
+    if classes_jar:
+        srcs.append(classes_jar)
 
     cmd = """
 cp $(location {0}.aar) $(location :{1}.aar)
@@ -73,9 +77,19 @@ cd $$(mktemp -d)
 unzip $$origdir/$(location :{1}_dummy_app_for_so_unsigned.apk) "lib/*"
 cp -r lib jni
 zip -r $$origdir/$(location :{1}.aar) jni/*/*.so
-cp $$origdir/$(location {2}) ./LICENSE
+""".format(android_library, name)
+
+    if classes_jar:
+        cmd += """
+zip -d $$origdir/$(location :{0}.aar) classes.jar
+cp $$origdir/$(location {1}) ./classes.jar
+zip $$origdir/$(location :{0}.aar) classes.jar
+""".format(name, classes_jar)
+
+    cmd += """
+cp $$origdir/$(location {0}) ./LICENSE
 zip $$origdir/$(location :{1}.aar) LICENSE
-""".format(android_library, name, license_file)
+""".format(license_file, name)
 
     if headers:
         srcs += headers

@@ -258,6 +258,7 @@ kt_android_library(
 aar_with_jni(
     name = "litert",
     android_library = ":litert_kotlin_api",
+    classes_jar = ":litert_kotlin_api_kt.jar",
     # copybara:uncomment third_party_notice = "//litert/kotlin/google/third_party_licenses:res/raw/third_party_licenses",
 )
 
