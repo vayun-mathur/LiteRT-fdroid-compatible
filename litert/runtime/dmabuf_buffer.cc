@@ -30,7 +30,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <linux/dma-buf.h>
-#include <linux/dma-heap.h>
+#include "litert/runtime/linux/dma-heap.h"
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>

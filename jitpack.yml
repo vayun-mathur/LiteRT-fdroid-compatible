@@ -1,0 +1,37 @@
+jdk:
+  - openjdk17
+
+install:
+  # Download the pre-built AAR from GitHub Releases
+  # This avoids building with Bazel on JitPack (which is slow and times out)
+  #
+  # INSTRUCTIONS:
+  # 1. Build the AAR locally: 
+  #    bazel build --config=android_arm64 --define=extra_kt_jvm_opts='-jvm-target 17' --define=public_maven_build=true //litert/kotlin:litert
+  # 2. Upload bazel-bin/litert/kotlin/litert.aar to a GitHub Release
+  # 3. Name the release asset: litert-<VERSION>.aar (e.g., litert-2.1.6.aar)
+  # 4. JitPack will download it automatically
+  
+  - VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "2.1.6")
+  - echo "Downloading LiteRT AAR version: $VERSION"
+  
+  # Try multiple possible filenames from the GitHub Release
+  - |
+    if wget -q https://github.com/vayun-mathur/LiteRT-fdroid-compatible/releases/download/v${VERSION}/litert-${VERSION}.aar -O litert.aar; then
+      echo "Downloaded litert-${VERSION}.aar"
+    elif wget -q https://github.com/vayun-mathur/LiteRT-fdroid-compatible/releases/download/${VERSION}/litert-${VERSION}.aar -O litert.aar; then
+      echo "Downloaded litert-${VERSION}.aar (without v prefix)"
+    elif wget -q https://github.com/vayun-mathur/LiteRT-fdroid-compatible/releases/download/v${VERSION}/litert.aar -O litert.aar; then
+      echo "Downloaded litert.aar"
+    elif wget -q https://github.com/vayun-mathur/LiteRT-fdroid-compatible/releases/download/${VERSION}/litert.aar -O litert.aar; then
+      echo "Downloaded litert.aar (without v prefix)"
+    else
+      echo "ERROR: Could not download AAR from GitHub Releases!"
+      echo "Please upload the AAR to: https://github.com/vayun-mathur/LiteRT-fdroid-compatible/releases"
+      echo "Expected filename: litert-${VERSION}.aar or litert.aar"
+      exit 1
+    fi
+  
+  # Verify the AAR was downloaded
+  - ls -lh litert.aar
+  - file litert.aar | grep -q "Zip archive" && echo "AAR verified successfully" || (echo "ERROR: Downloaded file is not a valid AAR!" && exit 1)

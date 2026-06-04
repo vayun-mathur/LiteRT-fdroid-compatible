@@ -147,7 +147,7 @@ cc_library(
 # copybara:comment_begin(oss-only)
 tflite_jni_binary(
     name = "LiteRt",
-    linkopts = tflite_jni_linkopts() + tflite_linkopts_no_undefined() + litert_android_linkopts(),
+    linkopts = tflite_jni_linkopts() + tflite_linkopts_no_undefined() + litert_android_linkopts() + ["-Wl,--undefined-version"],
     linkscript = ":litert_version_script.lds",
     # Set stamp = 0 to avoid including internal info to the binary for the public release.
     stamp = 0,
@@ -231,7 +231,6 @@ kt_android_library(
         "src/main/kotlin/com/google/ai/edge/litert/Model.kt",
         "src/main/kotlin/com/google/ai/edge/litert/ModelProvider.kt",
         "src/main/kotlin/com/google/ai/edge/litert/TensorBuffer.kt",
-        "src/main/kotlin/com/google/ai/edge/litert/deployment/AiPackModelProvider.kt",
     ] + TFLITE_JAVA_SRCS_COPIED + TFLITE_JAVA_SRCS_COPIED_WITH_CHANGES,
     exports_manifest = 1,
     javacopts = select({
@@ -245,7 +244,6 @@ kt_android_library(
     deps = [
         ":litert_kotlin_api_native_deps",  # unuseddeps: keep
         "@litert_maven//:androidx_lifecycle_lifecycle_common",
-        "@litert_maven//:com_google_android_play_ai_delivery",
         "@litert_maven//:com_google_guava_guava",
         "@litert_maven//:org_jetbrains_kotlinx_kotlinx_coroutines_android",
         "@litert_maven//:org_jetbrains_kotlinx_kotlinx_coroutines_guava",

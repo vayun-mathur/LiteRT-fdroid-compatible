@@ -1,0 +1,17 @@
+[safe]
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow
+	directory = /litert_build
+	directory = /litert_build/third_party/tensorflow

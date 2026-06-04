@@ -21,5 +21,5 @@ services:
       context: .
       dockerfile: hermetic_build.Dockerfile
     volumes:
-      - .:/litert_build
+      - ..:/litert_build:z
     command: bash -c "bazel build //litert/runtime:compiled_model"

@@ -1,5 +1,7 @@
 # LiteRT
 
+Non-free dependencies removed so this library can be used for f-droid applications
+
 <p align="center">
   <img src="./g3doc/sources/litert_logo.png" alt="LiteRT Logo"/>
 </p>

@@ -25,4 +25,6 @@ set -euo pipefail
 
 source /setup_bazel_env.sh
 
-bazel ${EXTRA_STARTUP} build //litert/runtime:compiled_model
+bazel ${EXTRA_STARTUP} build --config=android_arm64 \
+  --define=extra_kt_jvm_opts='-jvm-target 17' --define=public_maven_build=true \
+  //litert/kotlin:litert

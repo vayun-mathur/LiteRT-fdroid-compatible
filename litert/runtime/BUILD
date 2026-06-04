@@ -120,7 +120,7 @@ cc_library(
 cc_library(
     name = "dmabuf_buffer",
     srcs = ["dmabuf_buffer.cc"],
-    hdrs = ["dmabuf_buffer.h"],
+    hdrs = ["dmabuf_buffer.h", "linux/dma-heap.h"],
     deps = [
         "//litert/c:litert_common",
         "//litert/cc:litert_expected",

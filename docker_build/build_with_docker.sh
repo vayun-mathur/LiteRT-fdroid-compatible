@@ -104,7 +104,7 @@ else
     -e HTTPS_PROXY="${HTTPS_PROXY}" \
     -e NO_PROXY="${NO_PROXY}" \
     "${DISABLE_SVE_ARG[@]}" \
-    -v $(pwd)/..:/litert_build \
+    -v $(pwd)/..:/litert_build:z \
     litert_build_env
 fi
 
@@ -121,5 +121,5 @@ echo "Container '${CONTAINER_NAME}' is preserved with all build outputs."
 echo "You can:"
 echo "  - Copy files out: docker cp ${CONTAINER_NAME}:/litert_build/bazel-bin/<path> ."
 echo "  - Open a shell to inspect bazel-bin:"
-echo "    docker run --rm -it --user $(id -u):$(id -g) -e HOME=/litert_build -e USER=$(id -un) -e http_proxy=\"${http_proxy}\" -e https_proxy=\"${https_proxy}\" -e no_proxy=\"${no_proxy}\" -e HTTP_PROXY=\"${HTTP_PROXY}\" -e HTTPS_PROXY=\"${HTTPS_PROXY}\" -e NO_PROXY=\"${NO_PROXY}\" -v ${REPO_ROOT}:/litert_build litert_build_env bash"
+echo "    docker run --rm -it --user $(id -u):$(id -g) -e HOME=/litert_build -e USER=$(id -un) -e http_proxy=\"${http_proxy}\" -e https_proxy=\"${https_proxy}\" -e no_proxy=\"${no_proxy}\" -e HTTP_PROXY=\"${HTTP_PROXY}\" -e HTTPS_PROXY=\"${HTTPS_PROXY}\" -e NO_PROXY=\"${NO_PROXY}\" -v ${REPO_ROOT}:/litert_build:z litert_build_env bash"
 echo "  - Remove container: docker rm -f ${CONTAINER_NAME}"

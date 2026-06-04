@@ -138,7 +138,7 @@ docker run --name "${CONTAINER_NAME}" \
   -e "NO_PROXY=${NO_PROXY:-}" \
   "${DISABLE_SVE_ARG[@]}" \
   "${EXTRA_ENV[@]}" \
-  -v "${REPO_ROOT}:/litert_build" \
+  -v "${REPO_ROOT}:/litert_build:z" \
   litert_build_env \
   bash -c '
 set -eo pipefail
